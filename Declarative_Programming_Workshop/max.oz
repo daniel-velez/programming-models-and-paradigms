@@ -1,3 +1,5 @@
+
+% functional notation
 declare
 fun {Max L}
    fun {MaxLoop L M}
@@ -18,6 +20,7 @@ local L in
 end
 
 
+% procedural notation
 local
    Max = proc {$ L R}
 	    local 
@@ -38,22 +41,4 @@ local
    R
 in
    {Max [1 2 3 ~51 23] R}{Browse R}
-end
-		       
-
-
-declare
-fun {SumList List}
-   case List of nil then 0
-   [] H|T then
-      case H of H2|T2 then {SumList H}+{SumList T}
-      else H+{SumList T} % pattern matching on lists
-      end
-   end
-end
-
-local LS A in
-   LS = [[1 2] [3 4]]
-   A = {SumList LS}
-   {Browse A}
 end
