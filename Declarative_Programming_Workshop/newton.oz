@@ -29,15 +29,6 @@ local L = s  A = 2 in
 end
 
 
-
-local L = s(1.0 ss as) in
-   {Browse L}
-   {Browse L.1}
-   {Browse L.2}
-   {Browse L.3}
-end
-
-
 declare
 fun {Evaluar F A V}
    if F == A then V
@@ -79,43 +70,4 @@ end
 
 local A in
    {Browse {Evaluar s(0.0 s(m(0.0 x) m(3.0 1.0))) x x}}
-end
-
-
-
-declare
-fun {Limpiar F A V}
-   if F == A then V
-   else
-      case F
-      of s(LHS RHS) then
-	 if LHS == 0 then RHS
-	 elseif RHS == 0 then LHS
-	 else
-	    V1 = {Limpiar LHS A V}
-	    V2 = {Limpiar RHS A V}
-	 in
-	    if V1 == 0 then V2
-	    elseif V2 == 0 then V1
-	    else
-	       s(V1 V2)
-	    end
-	 end	 
-      [] r(LHS RHS) then
-	 {Evaluar LHS A V} - {Evaluar RHS A V}
-      [] m(LHS RHS) then
-	 {Evaluar LHS A V} * {Evaluar RHS A V}
-      [] d(LHS RHS) then
-	 {Evaluar LHS A V} / {Evaluar RHS A V}
-      [] l(E) then
-	 ln({Evaluar E A V})
-      [] e(B EXP) then
-	 {Power {Evaluar B A V} {Evaluar EXP A V}}
-      else F
-      end
-   end
-end
-
-local F = s(s(0 2) s(x 0)) in
-   {Browse {Limpiar F x x}}
 end
