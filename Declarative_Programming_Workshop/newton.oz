@@ -71,7 +71,7 @@ end
 
 declare
 fun {Limpiar F}
-   if F == 0 then _
+   if F == 0 then 0
    else
       case F
       of s(LHS RHS) then
@@ -88,6 +88,18 @@ fun {Limpiar F}
 	       end
 	    elseif RHSR == 0 then LHSR%{Limpiar LHSR}
 	    else s(LHSR RHSR)
+	    end
+	 end
+      [] m(LHS RHS) then
+	 if LHS == 0 then 0
+	 elseif RHS == 0 then 0
+	 else
+	    LHSR = {Limpiar LHS}
+	    RHSR = {Limpiar RHS}
+	 in
+	    if LHSR == 0 then 0
+	    elseif RHSR == 0 then 0
+	    else m({Limpiar LHSR} {Limpiar RHSR})
 	    end
 	 end
       else F
@@ -107,11 +119,13 @@ in
 end
 
 % S = s( 3 s(s(2 ~1) 3))
-local S = s( s(0 3) s(s(s(2 s(0 ~1)) 0) s(0 3))) in
+% S = s( s(0 3) s(s(s(2 s(0 ~1)) 0) s(0 3)))
+local
+   S = s(s(0 3) s(s(s(s(0 s(s(x 0) s(4 ~1))) s(0 ~1)) 0) s(0 3))) in
    {Browse {Limpiar S}}
 end
 
-local S = s(0 ~1) in
+local S = s(m(k s(m(0 1) s(k x))) m(x m(1 s(0 k)))) in
    {Browse {Limpiar S}}
 end
 
