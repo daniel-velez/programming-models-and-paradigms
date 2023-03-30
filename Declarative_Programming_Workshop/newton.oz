@@ -24,10 +24,6 @@ local L = s(k m(3 x)) in
    {Browse {Derivar L x}}
 end
 
-local L = s  A = 2 in
-   {Browse L==A}
-end
-
 
 declare
 fun {Evaluar F A V}
@@ -71,3 +67,52 @@ end
 local A in
    {Browse {Evaluar s(0.0 s(m(0.0 x) m(3.0 1.0))) x x}}
 end
+
+
+declare
+fun {Limpiar F}
+   if F == 0 then _
+   else
+      case F
+      of s(LHS RHS) then
+	 if LHS == 0 then {Limpiar RHS}
+	 elseif RHS == 0 then {Limpiar LHS}
+	 else
+	    LHSR = {Limpiar LHS}
+	    RHSR = {Limpiar RHS}
+	    Result = nil
+	 in
+	    if LHSR == 0 then
+	       if RHSR \= 0 then RHSR % {Limpiar RHSR}
+	       else RHSR%{Browse RHSR} 0
+	       end
+	    elseif RHSR == 0 then LHSR%{Limpiar LHSR}
+	    else s(LHSR RHSR)
+	    end
+	 end
+      else F
+      end
+   end 
+end
+
+
+local
+   S = s(2 3)
+   L = s
+in
+   case L of _ then
+      {Browse {Label S}}
+   else { Browse 'nothing' }
+   end
+end
+
+% S = s( 3 s(s(2 ~1) 3))
+local S = s( s(0 3) s(s(s(2 s(0 ~1)) 0) s(0 3))) in
+   {Browse {Limpiar S}}
+end
+
+local S = s(0 ~1) in
+   {Browse {Limpiar S}}
+end
+
+
