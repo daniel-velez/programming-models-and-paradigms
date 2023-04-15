@@ -90,6 +90,22 @@ fun {Limpiar F}
 	    else s(LHSR RHSR)
 	    end
 	 end
+      [] r(LHS RHS) then
+	 if LHS == 0 then {Limpiar RHS}
+	 elseif RHS == 0 then {Limpiar LHS}
+	 else
+	    LHSR = {Limpiar LHS}
+	    RHSR = {Limpiar RHS}
+	    Result = nil
+	 in
+	    if LHSR == 0 then
+	       if RHSR \= 0 then RHSR % {Limpiar RHSR}
+	       else RHSR%{Browse RHSR} 0
+	       end
+	    elseif RHSR == 0 then LHSR%{Limpiar LHSR}
+	    else s(LHSR RHSR)
+	    end
+	 end
       [] m(LHS RHS) then
 	 if LHS == 0 then 0
 	 elseif RHS == 0 then 0
